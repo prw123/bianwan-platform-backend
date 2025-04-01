@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibian.bianwanplatformbackend.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhibian.bianwanplatformbackend.model.entity.Student">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="avatar" column="avatar" />
+            <result property="classId" column="classId" />
+            <result property="elementarySchool" column="elementarySchool" />
+            <result property="parentPhone" column="parentPhone" />
+            <result property="recentHonors" column="recentHonors" />
+            <result property="remainingHours" column="remainingHours" />
+            <result property="currentPoints" column="currentPoints" />
+            <result property="isLeave" column="isLeave" />
+            <result property="createTime" column="createTime" />
+            <result property="updateTime" column="updateTime" />
+            <result property="isDelete" column="isDelete" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,avatar,classId,elementarySchool,parentPhone,
+        recentHonors,remainingHours,currentPoints,isLeave,createTime,
+        updateTime,isDelete
+    </sql>
+</mapper>
