@@ -14,7 +14,7 @@ public class Student {
     /**
      * 学生ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**

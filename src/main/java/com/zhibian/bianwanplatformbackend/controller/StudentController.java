@@ -7,6 +7,8 @@ import com.zhibian.bianwanplatformbackend.constant.UserConstant;
 import com.zhibian.bianwanplatformbackend.exception.ErrorCode;
 import com.zhibian.bianwanplatformbackend.exception.ThrowUtils;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentAddRequest;
+import com.zhibian.bianwanplatformbackend.model.dto.student.StudentChangeClassRequest;
+import com.zhibian.bianwanplatformbackend.model.dto.student.StudentUpdateRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.user.UserAddRequest;
 import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import com.zhibian.bianwanplatformbackend.model.entity.User;
@@ -42,5 +44,13 @@ public class StudentController {
         boolean result = studentService.save(student);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(student.getId());
+    }
+
+    @PostMapping("/add/class")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Boolean> addStudentClass(@RequestBody StudentChangeClassRequest studentChangeClassRequest) {
+        ThrowUtils.throwIf(studentChangeClassRequest == null, ErrorCode.PARAMS_ERROR);
+        boolean result = studentService.updateClassId(studentChangeClassRequest);
+        return ResultUtils.success(result);
     }
 }

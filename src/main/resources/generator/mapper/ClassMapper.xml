@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibian.bianwanplatformbackend.mapper.ClassMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhibian.bianwanplatformbackend.model.entity.Class">
+            <id property="id" column="id" />
+            <result property="className" column="className" />
+            <result property="isActive" column="isActive" />
+            <result property="createTime" column="createTime" />
+            <result property="updateTime" column="updateTime" />
+            <result property="isDelete" column="isDelete" />
+            <result property="teacherId" column="teacherId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,className,isActive,createTime,updateTime,isDelete,
+        teacherId
+    </sql>
+</mapper>
