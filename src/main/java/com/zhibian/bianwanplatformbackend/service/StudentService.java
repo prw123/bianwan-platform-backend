@@ -1,9 +1,17 @@
 package com.zhibian.bianwanplatformbackend.service;
-
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhibian.bianwanplatformbackend.model.dto.classhour.ClassHourAddRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentChangeClassRequest;
+import com.zhibian.bianwanplatformbackend.model.dto.student.StudentQueryRequest;
+import com.zhibian.bianwanplatformbackend.model.dto.user.UserQueryRequest;
 import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhibian.bianwanplatformbackend.model.entity.User;
+import com.zhibian.bianwanplatformbackend.model.vo.StudentVO;
+import com.zhibian.bianwanplatformbackend.model.vo.UserVO;
+
+import java.util.List;
 
 /**
 * @author prw
@@ -27,5 +35,10 @@ public interface StudentService extends IService<Student> {
      */
     int countStudentsNotLeave(ClassHourAddRequest classHourAddRequest);
     String getStudentIdsLeave(Long classId);
+
+    QueryWrapper<Student> getQueryWrapper(StudentQueryRequest studentQueryRequest);
+    StudentVO geStudentVO(Student student);
+    List<StudentVO> getStudentVOList(List<Student> studentsList);
+
 
 }

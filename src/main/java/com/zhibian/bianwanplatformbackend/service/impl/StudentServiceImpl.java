@@ -1,17 +1,28 @@
 package com.zhibian.bianwanplatformbackend.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhibian.bianwanplatformbackend.exception.BusinessException;
 import com.zhibian.bianwanplatformbackend.exception.ErrorCode;
 import com.zhibian.bianwanplatformbackend.exception.ThrowUtils;
 import com.zhibian.bianwanplatformbackend.model.dto.classhour.ClassHourAddRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentChangeClassRequest;
+import com.zhibian.bianwanplatformbackend.model.dto.student.StudentQueryRequest;
 import com.zhibian.bianwanplatformbackend.model.entity.Student;
+import com.zhibian.bianwanplatformbackend.model.entity.User;
+import com.zhibian.bianwanplatformbackend.model.vo.StudentVO;
+import com.zhibian.bianwanplatformbackend.model.vo.UserVO;
 import com.zhibian.bianwanplatformbackend.service.StudentService;
 import com.zhibian.bianwanplatformbackend.mapper.StudentMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +64,53 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
                 .map(Student::getId)
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
+    }
+
+    @Override
+    public QueryWrapper<Student> getQueryWrapper(StudentQueryRequest studentQueryRequest) {
+        if (studentQueryRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
+        }
+        String elementarySchool = studentQueryRequest.getElementarySchool();
+        String parentPhone = studentQueryRequest.getParentPhone();
+        String name = studentQueryRequest.getName();
+        String recentHonors = studentQueryRequest.getRecentHonors();
+        Integer remainingHours = studentQueryRequest.getRemainingHours();
+        Integer currentPoints = studentQueryRequest.getCurrentPoints();
+        Integer isLeave = studentQueryRequest.getIsLeave();
+        String sortField = studentQueryRequest.getSortField();
+        String sortOrder = studentQueryRequest.getSortOrder();
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(ObjUtil.isNotNull(name), "name", name);
+        queryWrapper.eq(StrUtil.isNotBlank(elementarySchool), "elementarySchool", elementarySchool);
+        queryWrapper.like(StrUtil.isNotBlank(parentPhone), "parentPhone", parentPhone);
+        queryWrapper.like(StrUtil.isNotBlank(recentHonors), "recentHonors", recentHonors);
+        queryWrapper.eq(ObjUtil.isNotNull(remainingHours), "remainingHours", remainingHours);
+        queryWrapper.eq(ObjUtil.isNotNull(currentPoints), "currentPoints", currentPoints);
+        queryWrapper.eq(ObjUtil.isNotNull(isLeave), "isLeave", isLeave);
+        queryWrapper.orderBy(StrUtil.isNotEmpty(sortField), sortOrder.equals("ascend"), sortField);
+        return queryWrapper;
+    }
+
+
+
+    @Override
+    public StudentVO geStudentVO(Student student) {
+        if (student == null) {
+            return null;
+        }
+        StudentVO studentVO = new StudentVO();
+        BeanUtils.copyProperties(student, studentVO);
+        return studentVO;
+    }
+
+    @Override
+    public List<StudentVO> getStudentVOList(List<Student> studentsList) {
+        if (CollUtil.isEmpty(studentsList)) {
+            return new ArrayList<>();
+        }
+        return studentsList.stream().map(this::geStudentVO).collect(Collectors.toList());
+
     }
 }
 

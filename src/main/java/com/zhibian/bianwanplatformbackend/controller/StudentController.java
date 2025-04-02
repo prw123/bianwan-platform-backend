@@ -1,5 +1,6 @@
 package com.zhibian.bianwanplatformbackend.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhibian.bianwanplatformbackend.annotation.AuthCheck;
 import com.zhibian.bianwanplatformbackend.common.BaseResponse;
 import com.zhibian.bianwanplatformbackend.common.ResultUtils;
@@ -8,11 +9,15 @@ import com.zhibian.bianwanplatformbackend.exception.ErrorCode;
 import com.zhibian.bianwanplatformbackend.exception.ThrowUtils;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentAddRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentChangeClassRequest;
+import com.zhibian.bianwanplatformbackend.model.dto.student.StudentQueryRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentUpdateRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.user.UserAddRequest;
+import com.zhibian.bianwanplatformbackend.model.dto.user.UserQueryRequest;
 import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import com.zhibian.bianwanplatformbackend.model.entity.User;
 import com.zhibian.bianwanplatformbackend.model.enums.StudentStatusEnum;
+import com.zhibian.bianwanplatformbackend.model.vo.StudentVO;
+import com.zhibian.bianwanplatformbackend.model.vo.UserVO;
 import com.zhibian.bianwanplatformbackend.service.StudentService;
 import com.zhibian.bianwanplatformbackend.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -22,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -54,4 +61,19 @@ public class StudentController {
         boolean result = studentService.updateClassId(studentChangeClassRequest);
         return ResultUtils.success(result);
     }
+
+    @PostMapping("/list/page/vo")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Page<StudentVO>> listStudentVOByPage(@RequestBody StudentQueryRequest studentQueryRequest) {
+        ThrowUtils.throwIf(studentQueryRequest == null, ErrorCode.PARAMS_ERROR);
+        long current = studentQueryRequest.getCurrent();
+        long pageSize = studentQueryRequest.getPageSize();
+        Page<Student>  studentPage= studentService.page(new Page<>(current, pageSize),
+                studentService.getQueryWrapper(studentQueryRequest));
+        Page<StudentVO> studentVOPage = new Page<>(current, pageSize, studentPage.getTotal());
+        List<StudentVO> studentVOList = studentService.getStudentVOList(studentPage.getRecords());
+        studentVOPage.setRecords(studentVOList);
+        return ResultUtils.success(studentVOPage);
+    }
+
 }
