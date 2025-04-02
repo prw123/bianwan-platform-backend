@@ -5,8 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-@SpringBootApplication
+
 @MapperScan("com.zhibian.bianwanplatformbackend.mapper")
+@SpringBootApplication
 @EnableAspectJAutoProxy
 public class BianwanPlatformBackendApplication {
 

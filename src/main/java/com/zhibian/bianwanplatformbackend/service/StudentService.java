@@ -1,5 +1,6 @@
 package com.zhibian.bianwanplatformbackend.service;
 
+import com.zhibian.bianwanplatformbackend.model.dto.classhour.ClassHourAddRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentChangeClassRequest;
 import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -18,5 +19,13 @@ public interface StudentService extends IService<Student> {
      * @return 是否更新成功
      */
     boolean updateClassId(StudentChangeClassRequest studentChangeClassRequest);
+
+    /**
+     * 统计班级中未请假的学生数
+     * @param classHourAddRequest
+     * @return 学生数量
+     */
+    int countStudentsNotLeave(ClassHourAddRequest classHourAddRequest);
+    String getStudentIdsLeave(Long classId);
 
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhibian.bianwanplatformbackend.mapper.ClassHourMapper">
+
+    <resultMap id="BaseResultMap" type="generator.domain.ClassHour">
+            <id property="id" column="id" />
+            <result property="classId" column="classId" />
+            <result property="teacherId" column="teacherId" />
+            <result property="courseCount" column="courseCount" />
+            <result property="expected_attendance" column="expected_attendance" />
+            <result property="actual_attendance" column="actual_attendance" />
+            <result property="leave_list" column="leave_list" />
+            <result property="createTime" column="createTime" />
+            <result property="updateTime" column="updateTime" />
+            <result property="isDelete" column="isDelete" />
+            <result property="reviewStatus" column="reviewStatus" />
+            <result property="reviewMessage" column="reviewMessage" />
+            <result property="reviewerId" column="reviewerId" />
+            <result property="reviewTime" column="reviewTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,classId,teacherId,courseCount,expected_attendance,actual_attendance,
+        leave_list,createTime,updateTime,isDelete,reviewStatus,
+        reviewMessage,reviewerId,reviewTime
+    </sql>
+</mapper>

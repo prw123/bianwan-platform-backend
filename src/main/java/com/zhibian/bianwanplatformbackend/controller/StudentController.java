@@ -12,6 +12,7 @@ import com.zhibian.bianwanplatformbackend.model.dto.student.StudentUpdateRequest
 import com.zhibian.bianwanplatformbackend.model.dto.user.UserAddRequest;
 import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import com.zhibian.bianwanplatformbackend.model.entity.User;
+import com.zhibian.bianwanplatformbackend.model.enums.StudentStatusEnum;
 import com.zhibian.bianwanplatformbackend.service.StudentService;
 import com.zhibian.bianwanplatformbackend.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -40,7 +41,7 @@ public class StudentController {
         Student student = new Student();
         BeanUtils.copyProperties(studentAddRequest, student);
         //默认状态为未请假
-        student.setIsLeave(0);
+        student.setIsLeave(StudentStatusEnum.READING.getCode());
         boolean result = studentService.save(student);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(student.getId());

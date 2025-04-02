@@ -1,14 +1,19 @@
 package com.zhibian.bianwanplatformbackend.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhibian.bianwanplatformbackend.exception.ErrorCode;
 import com.zhibian.bianwanplatformbackend.exception.ThrowUtils;
+import com.zhibian.bianwanplatformbackend.model.dto.classhour.ClassHourAddRequest;
 import com.zhibian.bianwanplatformbackend.model.dto.student.StudentChangeClassRequest;
 import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import com.zhibian.bianwanplatformbackend.service.StudentService;
 import com.zhibian.bianwanplatformbackend.mapper.StudentMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author prw
@@ -28,6 +33,26 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         updateWrapper.eq("name", name).set("classId", classId);
         return this.baseMapper.update(null, updateWrapper) > 0;
 
+    }
+    @Override
+    public int countStudentsNotLeave(ClassHourAddRequest classHourAddRequest){
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        Long classId = classHourAddRequest.getClassId();
+        queryWrapper.eq("classId", classId).eq("isLeave", 0);
+        return Math.toIntExact(this.baseMapper.selectCount(queryWrapper));
+    }
+    @Override
+    public String getStudentIdsLeave(Long classId) {
+        // 获取 isLeave 为 1 的学生 ID 列表
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("classId", classId).eq("isLeave", 1);
+        List<Student> students = this.baseMapper.selectList(queryWrapper);
+
+        // 将学生 ID 列表转换为逗号分隔的字符串
+        return students.stream()
+                .map(Student::getId)
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
     }
 }
 
