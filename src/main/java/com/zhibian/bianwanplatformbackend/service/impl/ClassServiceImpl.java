@@ -15,6 +15,15 @@ import org.springframework.stereotype.Service;
 public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class>
     implements ClassService{
 
+    @Override
+    public String getClassNameById(Long classId) {
+        if (classId == null) {
+            return null;
+        }
+        // 根据 classId 查询班级实体
+        Class classEntity = this.getById(classId);
+        return classEntity != null ? classEntity.getClassName() : null;
+    }
 }
 
 

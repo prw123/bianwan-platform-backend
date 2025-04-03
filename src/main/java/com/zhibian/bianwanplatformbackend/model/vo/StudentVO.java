@@ -40,6 +40,9 @@ public class StudentVO implements Serializable {
      */
     private String recentHonors;
 
+    /**返回班级名称**/
+    private String className;
+
     /**
      * 剩余课时
      */

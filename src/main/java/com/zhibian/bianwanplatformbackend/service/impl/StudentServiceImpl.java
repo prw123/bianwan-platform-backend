@@ -16,9 +16,11 @@ import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import com.zhibian.bianwanplatformbackend.model.entity.User;
 import com.zhibian.bianwanplatformbackend.model.vo.StudentVO;
 import com.zhibian.bianwanplatformbackend.model.vo.UserVO;
+import com.zhibian.bianwanplatformbackend.service.ClassService;
 import com.zhibian.bianwanplatformbackend.service.StudentService;
 import com.zhibian.bianwanplatformbackend.mapper.StudentMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -92,7 +94,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         return queryWrapper;
     }
 
-
+    @Autowired
+    ClassService classService;
 
     @Override
     public StudentVO geStudentVO(Student student) {
@@ -101,6 +104,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student>
         }
         StudentVO studentVO = new StudentVO();
         BeanUtils.copyProperties(student, studentVO);
+        /**
+         * 在返回包里加上班级的名称，通过班级id获取
+         */
+        Long classId = student.getClassId();
+        String className = classService.getClassNameById(classId);
+        studentVO.setClassName(className);
         return studentVO;
     }
 

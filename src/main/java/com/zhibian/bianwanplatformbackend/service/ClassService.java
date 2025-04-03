@@ -9,5 +9,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2025-04-02 13:53:42
 */
 public interface ClassService extends IService<Class> {
+    /**
+     * 根据班级id获取班级名称
+     * @param classId
+     * @return
+     */
+    String getClassNameById(Long classId);
 
 }
