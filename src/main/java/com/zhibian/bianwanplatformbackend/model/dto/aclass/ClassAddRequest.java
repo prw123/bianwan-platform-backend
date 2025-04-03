@@ -13,5 +13,5 @@ public class ClassAddRequest implements Serializable {
     /**
      * 老师id
      */
-    private String teacherId;
+    private String teacherName;
 }

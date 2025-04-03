@@ -2,6 +2,9 @@ package com.zhibian.bianwanplatformbackend.service;
 
 import com.zhibian.bianwanplatformbackend.model.entity.Class;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhibian.bianwanplatformbackend.model.vo.ClassVO;
+
+import java.util.List;
 
 /**
 * @author prw
@@ -15,5 +18,4 @@ public interface ClassService extends IService<Class> {
      * @return
      */
     String getClassNameById(Long classId);
-
 }

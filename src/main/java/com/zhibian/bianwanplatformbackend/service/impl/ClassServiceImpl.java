@@ -2,9 +2,17 @@ package com.zhibian.bianwanplatformbackend.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhibian.bianwanplatformbackend.model.entity.Class;
+import com.zhibian.bianwanplatformbackend.model.entity.Student;
+import com.zhibian.bianwanplatformbackend.model.vo.ClassVO;
 import com.zhibian.bianwanplatformbackend.service.ClassService;
 import com.zhibian.bianwanplatformbackend.mapper.ClassMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
 * @author prw
@@ -13,7 +21,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class>
-    implements ClassService{
+    implements ClassService {
 
     @Override
     public String getClassNameById(Long classId) {
@@ -25,6 +33,7 @@ public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class>
         return classEntity != null ? classEntity.getClassName() : null;
     }
 }
+
 
 
 

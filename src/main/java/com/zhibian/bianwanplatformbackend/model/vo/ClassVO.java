@@ -2,10 +2,12 @@ package com.zhibian.bianwanplatformbackend.model.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.zhibian.bianwanplatformbackend.model.entity.Student;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ClassVO implements Serializable {
@@ -37,8 +39,11 @@ public class ClassVO implements Serializable {
     private Date updateTime;
 
     /**
-     * 老师id
+     * 老师姓名
      */
-    private String teacherId;
+    private String teacherName;
+
+    private List<Student> students;
+
 
 }

@@ -34,8 +34,8 @@ public class ClassController {
     public BaseResponse<Long> addClass(@RequestBody ClassAddRequest classAddRequest) {
         ThrowUtils.throwIf(classAddRequest == null, ErrorCode.PARAMS_ERROR);
         String classname = classAddRequest.getClassName();
-        String teacherId = classAddRequest.getTeacherId();
-        ThrowUtils.throwIf(classname.isEmpty() || teacherId.isEmpty() , ErrorCode.PARAMS_ERROR);
+        String teacherName = classAddRequest.getTeacherName();
+        ThrowUtils.throwIf(classname.isEmpty() || teacherName.isEmpty() , ErrorCode.PARAMS_ERROR);
         Class class1= new Class();
         BeanUtils.copyProperties(classAddRequest, class1);
         //默认状态未开课

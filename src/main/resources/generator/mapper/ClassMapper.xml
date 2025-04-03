@@ -11,11 +11,11 @@
             <result property="createTime" column="createTime" />
             <result property="updateTime" column="updateTime" />
             <result property="isDelete" column="isDelete" />
-            <result property="teacherId" column="teacherId" />
+            <result property="teacherName" column="teacherName" />
     </resultMap>
-
     <sql id="Base_Column_List">
         id,className,isActive,createTime,updateTime,isDelete,
-        teacherId
+        teacherName
     </sql>
+
 </mapper>
